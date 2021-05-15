@@ -4,7 +4,10 @@ import NoteForm from './NoteForm';
 const setFormDataCallback = jest.fn();
 
 const defaultProps = {
-  formData: { name: 'bob'},
+  formData: { 
+    name: '',
+    description: ''
+  },
   setFormDataCallback: setFormDataCallback
 };
 
@@ -20,14 +23,14 @@ test('should display the note name field', () => {
   expect(input).toBeTruthy
 });
 
-test('should display placeholder description', () => {
+test('should display the name placeholder', () => {
   setup()
   const input = screen.getByTestId('note-name-field');
   
   expect(input).toHaveAttribute('placeholder', 'Note name');
 });
 
-test('should display existing value', () => {
+test('should display existing name value', () => {
 
   setup({formData: { name: 'test name'}})
   const input = screen.getByTestId('note-name-field');
@@ -35,7 +38,7 @@ test('should display existing value', () => {
   expect(input.value).toEqual("test name");
 });
 
-test('should display default value', () => {
+test('should display default name value', () => {
 
   setup({formData: { name: ''}})
   const input = screen.getByTestId('note-name-field');
@@ -43,7 +46,7 @@ test('should display default value', () => {
   expect(input.value).toEqual("");
 });
 
-test('should set form data when input value updated', () => {
+test('should set form data when name value updated', () => {
   setup({formData: { name: 'test name'}})
   const input = screen.getByTestId('note-name-field');
   
@@ -59,4 +62,37 @@ test('should display the note description field', () => {
   const input = screen.getByTestId('note-description-field')
   
   expect(input).toBeTruthy
+});
+test('should display the description placeholder', () => {
+  setup()
+  const input = screen.getByTestId('note-description-field');
+  
+  expect(input).toHaveAttribute('placeholder', 'Note description');
+});
+
+test('should display existing description value', () => {
+
+  setup({formData: { description: 'test description'}})
+  const input = screen.getByTestId('note-description-field');
+  
+  expect(input.value).toEqual("test description");
+});
+
+test('should display default description value', () => {
+
+  setup({formData: { description: ''}})
+  const input = screen.getByTestId('note-description-field');
+  
+  expect(input.value).toEqual("");
+});
+
+test('should set form data when description value updated', () => {
+  setup({formData: { description: 'test description'}})
+  const input = screen.getByTestId('note-description-field');
+  
+  fireEvent.change(input, { target: { value: 'new test description' } })
+  
+  expect(setFormDataCallback.mock.calls.length).toBe(1);
+  expect(setFormDataCallback.mock.calls[0][0])
+    .toStrictEqual({ description: "new test description"});
 });
