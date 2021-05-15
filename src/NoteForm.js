@@ -9,6 +9,7 @@ function NoteForm(props) {
                     )}
                 placeholder="Note name"
                 value={props.formData.name}/>
+                
             <input data-testid="note-description-field" 
                 placeholder="Note description"
                 onChange={e => props.setFormDataCallback({ 
@@ -16,6 +17,11 @@ function NoteForm(props) {
                     'description': e.target.value}
                     )}
                 value={props.formData.description}/>
+
+            <button data-testid="note-form-submit"
+                onClick={props.createNoteCallback}>
+                Create Note
+            </button>
         </div>
     );
   }
