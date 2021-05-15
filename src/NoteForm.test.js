@@ -3,5 +3,14 @@ import NoteForm from './NoteForm';
   
 test('should display the note name field', () => {
   render(<NoteForm />);
-  expect(screen.getByTestId('note-name-field')).toBeTruthy();
+  const input = screen.getByTestId('note-name-field')
+  
+  expect(input).toBeTruthy
+});
+
+test('should display placeholder description', () => {
+  render(<NoteForm />);
+  const input = screen.getByTestId('note-name-field');
+  
+  expect(input).toHaveAttribute('placeholder', 'Note name');
 });
