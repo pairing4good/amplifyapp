@@ -1,9 +1,16 @@
 function NoteForm(props) {
-
     return (
-        <input 
-            data-testid="note-name-field"
-            placeholder="Note name"/>
+        <div>
+            <input 
+                data-testid="note-name-field"
+                onChange={e => props.setFormDataCallback({ 
+                    ...props.formData, 
+                    'name': e.target.value}
+                    )}
+                placeholder="Note name"
+                value={props.formData.name}/>
+            <input data-testid="note-description-field" />
+        </div>
     );
   }
   
