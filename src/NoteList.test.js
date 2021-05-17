@@ -47,15 +47,15 @@ test('should display the note list section', () => {
     ]
     setup({notes: notes});
     
-    const firstNote = screen.getByTestId('test-1');
+    const firstNote = screen.getByTestId('test-0');
     expect(firstNote).toBeTruthy;
 
 
-    const secondNote = screen.getByTestId('test-2');
+    const secondNote = screen.getByTestId('test-1');
     expect(secondNote).toBeTruthy;
 
     
-    const thirdNote = screen.getByTestId('test-3');    
+    const thirdNote = screen.getByTestId('test-2');    
     expect(thirdNote).toBeTruthy;
   });
 
@@ -69,15 +69,15 @@ test('should display the note list section', () => {
     ]
     setup({notes: notes});
     
-    const noteName = screen.getByTestId('test-name-1');
+    const noteName = screen.getByTestId('test-name-0');
     expect(noteName).toBeTruthy;
     expect(noteName).toHaveTextContent("test name 1");
 
-    const noteDescription = screen.getByTestId('test-description-1');
+    const noteDescription = screen.getByTestId('test-description-0');
     expect(noteDescription).toBeTruthy;
     expect(noteDescription).toHaveTextContent("test description 1");
 
-    const button = screen.getByTestId('test-button-1');
+    const button = screen.getByTestId('test-button-0');
     expect(button).toBeTruthy;
     expect(button).toHaveTextContent("Delete note");
   });
@@ -90,7 +90,7 @@ test('should delete note when clicked', () => {
     }
     const notes = [ note ]
     setup({notes: notes});
-    const button = screen.getByTestId('test-button-1');
+    const button = screen.getByTestId('test-button-0');
     
     fireEvent.click(button)
     
