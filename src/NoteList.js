@@ -3,17 +3,17 @@ function NoteForm(props) {
         <div data-testid="note-list"
             style={{marginBottom: 30}}>
                 {
-                    props.notes.map(note => (
-                        <div data-testid={'test-' + note.id}
-                            key={note.id}>
-                            <h2 data-testid={'test-name-' + note.id}>
+                    props.notes.map(note, index => (
+                        <div data-testid={'test-' + index}
+                            key={index}>
+                            <h2 data-testid={'test-name-' + index}>
                                 {note.name}
                             </h2>
-                            <p data-testid={'test-description-' + note.id}>
+                            <p data-testid={'test-description-' + index}>
                                 {note.description}
                             </p>
                             <button 
-                                data-testid={'test-button-' + note.id}
+                                data-testid={'test-button-' + index}
                                 onClick={() => props.deleteNoteCallback(note)}>
                                 Delete note
                             </button>
