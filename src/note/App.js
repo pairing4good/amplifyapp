@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import '../App.css';
-import { API } from 'aws-amplify';
 import { withAuthenticator } from '@aws-amplify/ui-react';
-import { listNotes } from '../graphql/queries';
-import { createNote as createNoteMutation, deleteNote as deleteNoteMutation } from '../graphql/mutations';
 import Header from './Header'
 import NoteForm from './NoteForm'
 import NoteList from './NoteList'
 import Footer from './Footer'
+import {createNote, fetchNotes, deleteNote} from '../common/NoteRepository'
 
 const initialFormState = { name: '', description: '' }
 
@@ -16,25 +14,25 @@ function App() {
   const [formData, setFormData] = useState(initialFormState);
 
   useEffect(() => {
-    fetchNotes();
+    fetchNotesCallback();
   }, []);
 
-  async function fetchNotes() {
-    const apiData = await API.graphql({ query: listNotes });
-    setNotes(apiData.data.listNotes.items);
+  async function fetchNotesCallback() {
+    const notes = await fetchNotes();
+    setNotes(notes);
   }
 
-  async function createNote() {
+  async function createNoteCallback() {
     if (!formData.name || !formData.description) return;
-    const apiData = await API.graphql({ query: createNoteMutation, variables: { input: formData } });
-    setNotes([ ...notes, apiData.data.createNote ]);
+    const newNote = await createNote(formData);
+    setNotes([ ...notes, newNote ]);
     setFormData(initialFormState);
   }
 
-  async function deleteNote({ id }) {
+  async function deleteNoteCallback({ id }) {
     const newNotesArray = notes.filter(note => note.id !== id);
     setNotes(newNotesArray);
-    await API.graphql({ query: deleteNoteMutation, variables: { input: { id } }});
+    await deleteNote(id);
   }
 
   return (
@@ -42,9 +40,9 @@ function App() {
       <Header />
       <NoteForm formData={formData} 
         setFormDataCallback={setFormData} 
-        createNoteCallback={createNote}/>
+        createNoteCallback={createNoteCallback}/>
       <NoteList notes={notes} 
-        deleteNoteCallback={deleteNote} />
+        deleteNoteCallback={deleteNoteCallback} />
       <Footer />
     </div>
   );
